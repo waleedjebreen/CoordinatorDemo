@@ -22,33 +22,3 @@ protocol CoordinatorProtocol {
     func presentModal(modal: AppModalsEnum)
     func dismissModal()
 }
-
-class TestCoordinator: ObservableObject, CoordinatorProtocol {
-    @Published var path: NavigationPath = .init()
-    @Published var sheet: AppSheetsEnum?
-    @Published var modal: AppModalsEnum?
-    
-    func push(page: AppPagesEnum) {
-        path.append(page)
-    }
-    func pop() {
-        path.removeLast()
-    }
-    func popToRoot(){
-        path.removeLast(path.count)
-    }
-    
-    func presentSheet(sheet: AppSheetsEnum){
-        self.sheet = sheet
-    }
-    func dismissSheet(){
-        self.sheet = nil
-    }
-    
-    func presentModal(modal: AppModalsEnum){
-        self.modal = modal
-    }
-    func dismissModal(){
-        self.modal = nil
-    }
-}

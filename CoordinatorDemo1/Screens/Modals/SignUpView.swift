@@ -1,49 +1,62 @@
 //
-//  LogInView.swift
-//  CoordinatorDemo1
+//  SignUpView.swift
+//  CoordinatorDemo
 //
 //  Created by Waleed Jebrin on 13/01/2025.
 //
 
 import SwiftUI
 
-struct LogInView: View {
+struct SignUpView: View {
     @EnvironmentObject private var coordinator: MainCoordinator
     @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
+    @State private var confirmPassword: String = ""
     @State private var isSecure: Bool = true
-    
+
     var body: some View {
         ScrollView {
             VStack {
                 Spacer()
-                
-                Text("Welcome Back")
+
+                Text("Create Account")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .padding(.bottom, 20)
-                
-                Image(systemName: "person.circle.fill")
+
+                Image(systemName: "person.crop.circle.fill.badge.plus")
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
                     .foregroundColor(.blue)
                     .padding(.bottom, 40)
-                
+
                 VStack(alignment: .leading) {
                     Text("Username")
-                        .font(.headline)
+                        .font(.subheadline)
                         .padding(.bottom, 5)
-                    
+
                     TextField("Enter your username", text: $username)
                         .padding()
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(5)
                         .padding(.bottom, 20)
-                    
-                    Text("Password")
-                        .font(.headline)
+
+                    Text("Email Address")
+                        .font(.subheadline)
                         .padding(.bottom, 5)
-                    
+
+                    TextField("Enter your email address", text: $email)
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(5)
+                        .padding(.bottom, 20)
+
+                    Text("Password")
+                        .font(.subheadline)
+                        .padding(.bottom, 5)
+
                     HStack {
                         if isSecure {
                             SecureField("Enter your password", text: $password)
@@ -60,13 +73,35 @@ struct LogInView: View {
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(5)
+                    .padding(.bottom, 20)
+
+                    Text("Confirm Password")
+                        .font(.subheadline)
+                        .padding(.bottom, 5)
+
+                    HStack {
+                        if isSecure {
+                            SecureField("Confirm your password", text: $confirmPassword)
+                        } else {
+                            TextField("Confirm your password", text: $confirmPassword)
+                        }
+                        Button(action: {
+                            isSecure.toggle()
+                        }) {
+                            Image(systemName: isSecure ? "eye.slash" : "eye")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .padding()
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(5)
                 }
                 .padding(.horizontal, 30)
-                
+
                 Button(action: {
-                    // Handle login action here
+                    coordinator.dismissModal()
                 }) {
-                    Text("Login")
+                    Text("Sign Up")
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -75,29 +110,16 @@ struct LogInView: View {
                         .padding(.horizontal, 30)
                 }
                 .padding(.top, 30)
-                
+
                 Spacer()
-                
-                VStack {
-                    Button(action: {
-                        coordinator.presentSheet(sheet: .forgotPassword)
-                    }) {
-                        Text("Forgot Password?")
-                            .foregroundColor(.blue)
-                    }
-                    .padding(.bottom, 10)
-                    
-                    HStack {
-                        Text("Don't have an account?")
-                        Button(action: {
-                            coordinator.presentModal(modal: .signup)
-                        }) {
-                            Text("Sign Up")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                    .padding(.bottom, 20)
+
+                Button(action: {
+                    coordinator.dismissModal()
+                }) {
+                    Text("Already have an account?")
+                        .foregroundColor(.blue)
                 }
+                .padding(.bottom, 20)
             }
             .background(.white)
             .edgesIgnoringSafeArea(.all)
@@ -106,5 +128,5 @@ struct LogInView: View {
 }
 
 #Preview {
-    LogInView()
+    SignUpView()
 }

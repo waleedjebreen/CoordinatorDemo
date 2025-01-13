@@ -15,7 +15,8 @@ enum AppModalsEnum: String, Identifiable {
     @ViewBuilder
     func build() -> some View {
         switch self {
-            case .signup: SignUpView()
+        case .signup:
+            SignUpView()
         }
     }
 }

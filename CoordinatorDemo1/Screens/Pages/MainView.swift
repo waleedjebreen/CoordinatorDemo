@@ -8,8 +8,24 @@
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject private var coordinator: MainCoordinator
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            Button {
+                coordinator.push(page: .login)
+            } label: {
+                Text("Get Started")
+                    .font(.title3)
+                    .foregroundStyle(.white)
+                    .padding(16)
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .clipShape(.buttonBorder)
+        }
+        .padding(16)
     }
 }
 

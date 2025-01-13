@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var coordinator = MainCoordinator()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack(path: $coordinator.path) {
+            AppPagesEnum.main.build()
+                .navigationDestination(for: AppPagesEnum.self) { page in
+                    page.build()
+                }
+                .sheet(item: $coordinator.sheet) { sheet in
+                    sheet.build()
+                }
+                .fullScreenCover(item: $coordinator.modal) { modal in
+                    modal.build()
+                }
         }
-        .padding()
+        .environmentObject(coordinator)
     }
 }
 
