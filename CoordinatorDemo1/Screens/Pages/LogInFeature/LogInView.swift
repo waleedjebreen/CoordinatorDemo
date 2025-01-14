@@ -8,20 +8,33 @@
 import SwiftUI
 
 struct LogInView: View {
+    
     @EnvironmentObject private var coordinator: MainCoordinator
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var isSecure: Bool = true
+    @StateObject private var loginVM: LogInViewModel
+    
+    init(state: LogInState) {
+        _loginVM = .init(wrappedValue: .init(fullName: state.fullname))
+    }
     
     var body: some View {
         ScrollView {
             VStack {
                 Spacer()
                 
-                Text("Welcome Back")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .padding(.bottom, 20)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Welcome Back")
+                        .font(.body)
+                        .fontWeight(.regular)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                    if let name = loginVM.fullName {
+                        Text(name)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .padding([.bottom, .horizontal], 20)
                 
                 Image(systemName: "person.circle.fill")
                     .resizable()
@@ -34,7 +47,7 @@ struct LogInView: View {
                         .font(.headline)
                         .padding(.bottom, 5)
                     
-                    TextField("Enter your username", text: $username)
+                    TextField("Enter your username", text: $loginVM.username)
                         .padding()
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(5)
@@ -45,15 +58,15 @@ struct LogInView: View {
                         .padding(.bottom, 5)
                     
                     HStack {
-                        if isSecure {
-                            SecureField("Enter your password", text: $password)
+                        if loginVM.isSecure {
+                            SecureField("Enter your password", text: $loginVM.password)
                         } else {
-                            TextField("Enter your password", text: $password)
+                            TextField("Enter your password", text: $loginVM.password)
                         }
                         Button(action: {
-                            isSecure.toggle()
+                            loginVM.isSecure.toggle()
                         }) {
-                            Image(systemName: isSecure ? "eye.slash" : "eye")
+                            Image(systemName: loginVM.isSecure ? "eye.slash" : "eye")
                                 .foregroundColor(.gray)
                         }
                     }
@@ -105,6 +118,6 @@ struct LogInView: View {
     }
 }
 
-#Preview {
-    LogInView()
-}
+//#Preview {
+//    LogInView()
+//}
