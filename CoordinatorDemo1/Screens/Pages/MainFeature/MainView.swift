@@ -28,7 +28,7 @@ struct MainView: View {
             
             Spacer()
             Button {
-                coordinator.push(page: .login(state: .init(fullname: fullName)))
+                coordinator.push(page: .login(input: .init(fullname: fullName)))
             } label: {
                 Text("Get Started")
                     .font(.title3)

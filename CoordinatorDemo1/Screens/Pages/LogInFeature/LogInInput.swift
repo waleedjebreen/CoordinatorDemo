@@ -1,10 +1,10 @@
 //
-//  LogInState.swift
+//  LogInInput.swift
 //  CoordinatorDemo1
 //
 //  Created by Waleed Jebrin on 14/01/2025.
 //
 
-struct LogInState: Hashable {
+struct LogInInput: Hashable {
     let fullname: String
 }

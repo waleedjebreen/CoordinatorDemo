@@ -12,7 +12,7 @@ struct LogInView: View {
     @EnvironmentObject private var coordinator: MainCoordinator
     @StateObject private var loginVM: LogInViewModel
     
-    init(state: LogInState) {
+    init(state: LogInInput) {
         _loginVM = .init(wrappedValue: .init(fullName: state.fullname))
     }
     

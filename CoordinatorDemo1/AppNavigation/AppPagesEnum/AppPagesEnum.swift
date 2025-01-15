@@ -9,15 +9,15 @@ import SwiftUI
 
 enum AppPagesEnum: Hashable {
     case main
-    case login(state: LogInState)
+    case login(input: LogInInput)
     
     @ViewBuilder
     func build() -> some View {
         switch self {
         case .main:
             MainView()
-        case .login(let state):
-            LogInView(state: state)
+        case .login(let input):
+            LogInView(state: input)
         }
     }
 }
